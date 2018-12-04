@@ -278,12 +278,17 @@ public class PessoasCadastro extends javax.swing.JFrame {
                     Helper.MostrarMensagem.mostrarErroMensagem("Registro já cadastrado!");
             }
 
-            else
+            else if(acaoFrame == ALTERAR && Pessoa.permitirAlteracao(idPessoa, cpfCnpjStr) == true)
             {
                 pessoa.setIdPessoa(idPessoa);
                 PessoasPanel.limparTabela();
                 PessoasPanel.adicionarNaTabela(Pessoa.alterarPessoa(pessoa));
                 this.dispose();
+            }
+            
+            else
+            {
+                Helper.MostrarMensagem.mostrarErroMensagem("Registro já cadastrado!");
             }
         }
         

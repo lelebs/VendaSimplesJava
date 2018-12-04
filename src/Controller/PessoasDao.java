@@ -24,6 +24,8 @@ public class PessoasDao
     private static final String EXCLUIR_PESSOA = "DELETE FROM pessoa WHERE id = ?";
     private static final String ALTERAR_PESSOA = "UPDATE pessoa SET razaosocial = ?, datanascimento = ?, cpfcnpj = ?"
             + ", tipopessoa = ?, ativo = ? WHERE id = ?";
+    private static final String VALIDAR_PESSOA_EXISTE = "SELECT * FROM pessoa WHERE cpfcnpj = ?";
+    private static final String PERMITIR_ALTERACAO = "SELECT cpfCnpj FROM pessoa WHERE id <> ? AND cpfCnpj = ?";
     
     public static Pessoa inserir(Pessoa pessoa)
     {
@@ -224,16 +226,46 @@ public class PessoasDao
         //return Pessoa.listarUma(pessoa.getIdPessoa());
     }
     
-    public static boolean validarSeCpfCnpjExiste(String cpfCnpf)
+    public static boolean validarSeCpfCnpjExiste(String cpfCnpj)
     {
         CONN = ConnectionFactory.connect();
-        
-        String sql = "SELECT * FROM pessoa WHERE cpfcnpj = '" + cpfCnpf + "'"; 
         
         try
         {
             //Preparamos a chamada da constante SELECT_ID_MERCADORIA
-            PreparedStatement pstmt = CONN.prepareStatement(sql);
+            PreparedStatement pstmt = CONN.prepareStatement(VALIDAR_PESSOA_EXISTE);
+            pstmt.setString(1, cpfCnpj);
+            
+            //Executamos a query e armazenos o retorno no ResultSet
+            try(ResultSet rs = pstmt.executeQuery())
+            {   
+                if(rs.next() == true)
+                {
+                    return true;
+                }
+            }
+            
+            CONN.close();
+        }
+        
+        catch(SQLException ex)
+        {
+            throw new BancoException(ex.getMessage());
+        }
+        
+        return false;
+    }
+    
+    public static boolean permitirAlteracao(int idPessoa, String cpfCnpj)
+    {
+        CONN = ConnectionFactory.connect();
+        
+        try
+        {
+            //Preparamos a chamada da constante SELECT_ID_MERCADORIA
+            PreparedStatement pstmt = CONN.prepareStatement(PERMITIR_ALTERACAO);
+            pstmt.setInt(1, idPessoa);
+            pstmt.setString(2, cpfCnpj);
             
             //Executamos a query e armazenos o retorno no ResultSet
             try(ResultSet rs = pstmt.executeQuery())

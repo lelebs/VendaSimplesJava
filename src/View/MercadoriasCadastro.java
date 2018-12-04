@@ -220,7 +220,7 @@ public class MercadoriasCadastro extends javax.swing.JFrame {
                 Helper.MostrarMensagem.mostrarErroMensagem("Registro já cadastrado!");
             }
 
-            else if(acaoFrame == ALTERAR && Mercadoria.permitirAlteracao(mercadoria.getIdMercadoria(), mercadoria.getCodigo()) == false)
+            else if(acaoFrame == ALTERAR && Mercadoria.permitirAlteracao(idMercadoria, codigoStr) == true)
             {
                 mercadoria.setIdMercadoria(idMercadoria);
                 MercadoriasPanel.limparTabela();

@@ -90,4 +90,9 @@ public class Pessoa {
     {
         return Controller.PessoasDao.validarSeCpfCnpjExiste(cpfCnpj);
     }
+    
+    public static boolean permitirAlteracao(int idPessoa, String cpfCnpj)
+    {
+        return Controller.PessoasDao.permitirAlteracao(idPessoa, cpfCnpj);
+    }
 }

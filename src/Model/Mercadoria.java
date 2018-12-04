@@ -81,6 +81,6 @@ public class Mercadoria {
     
     public static boolean permitirAlteracao(int idMercadoria, String codigo)
     {
-        return Controller.MercadoriasDao.validarAlteracao(idMercadoria, codigo);
+        return Controller.MercadoriasDao.permitirAlteracao(idMercadoria, codigo);
     }
 }

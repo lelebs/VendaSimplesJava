@@ -249,7 +249,7 @@ public class MercadoriasDao
         return false;
     }
     
-    public static boolean validarAlteracao(int idMercadoria, String codigoMercadoria)
+    public static boolean permitirAlteracao(int idMercadoria, String codigoMercadoria)
     {
         CONN = ConnectionFactory.connect();
         
@@ -264,11 +264,11 @@ public class MercadoriasDao
             {
                 if(rs.next() == true)
                 {
-                    return true;
+                    return false;
                 }
             }
             
-            return false;
+            return true;
         }
         
         catch(SQLException ex)
