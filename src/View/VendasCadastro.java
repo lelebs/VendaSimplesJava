@@ -19,13 +19,21 @@ import javax.swing.JFrame;
 
 
 public class VendasCadastro extends javax.swing.JFrame {
+    
+    private int acaoFrame = 0;
+    private static final int INSERIR = 1;
+    private static final int ALTERAR = 2;
+    private static final int VISUALIZAR = 3;
+    public static Pessoa pessoa = null;
+    public static Mercadoria mercadoria = null;
 
 
-    public VendasCadastro(Venda venda, String acao) {
+    public VendasCadastro(Venda venda, int acao) {
         initComponents();
         limparObjeto();
         receberVenda(venda);
-        verificarAcao(acao);
+        acaoFrame = acao;
+        verificarAcao(acaoFrame);
         setIcon();
     }
 
@@ -34,8 +42,6 @@ public class VendasCadastro extends javax.swing.JFrame {
         this.pessoa = null;
         this.mercadoria = null;
     }
-    public static Pessoa pessoa = null;
-    public static Mercadoria mercadoria = null;
     
     public static void atualizarCampos()
     {
@@ -53,9 +59,9 @@ public class VendasCadastro extends javax.swing.JFrame {
         }
     }
     
-    private static void verificarAcao(String acao)
+    private static void verificarAcao(int acao)
     {
-        if("v".equals(acao))
+        if(acao == VISUALIZAR)
         {
             bttnPesquisarMercadoria.setEnabled(false);
             bttnPesquisarPessoa.setEnabled(false);
@@ -376,14 +382,10 @@ public class VendasCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQuantidadeKeyTyped
 
     private void bttnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnSalvarActionPerformed
-        char acao = 'i';
-        
+       
         String quantidadeStr = txtQuantidade.getText();
         String valorUnitarioStr = txtValorUnitario.getText();
         String valorTotalStr = txtValorTotal.getText();
-        
-        if("Venda - Alterando".equals(this.getTitle()))
-            acao = 'a';
         
         try
         {
@@ -415,7 +417,7 @@ public class VendasCadastro extends javax.swing.JFrame {
             
             VendaTable vendaTable = null;
             
-            if(acao == 'i')
+            if(acaoFrame == INSERIR)
             {
                 vendaTable = Venda.inserirVenda(venda);
                 VendasPanel.limparTabela();
@@ -424,7 +426,7 @@ public class VendasCadastro extends javax.swing.JFrame {
                 this.dispose();
             }
 
-            else if(acao == 'a')
+            else if(acaoFrame == ALTERAR)
             {
                 int id = Integer.parseInt(txtCodigo.getText());
                 venda.setIdVenda(id);
@@ -478,7 +480,7 @@ public class VendasCadastro extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run(Venda venda, String acao) {
+            public void run(Venda venda, int acao) {
                 new VendasCadastro(venda, acao).setVisible(true);
             }
 

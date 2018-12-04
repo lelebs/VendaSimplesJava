@@ -30,6 +30,9 @@ public class VendasPanel extends javax.swing.JPanel {
     private int idLinha = 0;
     private static List<VendaTable>lista;    
     private static TabelaVenda dadosTabela;
+    private final int INSERIR = 1;
+    private final int ALTERAR = 2;
+    private final int VISUALIZAR = 3;
 
     private void inicializar(){
         lista = new ArrayList<>();
@@ -271,7 +274,7 @@ public class VendasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_bttnPesquisarActionPerformed
 
     private void bttnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnInserirActionPerformed
-        JFrame jFrameVenda = new VendasCadastro(null, "i");
+        JFrame jFrameVenda = new VendasCadastro(null, INSERIR);
         jFrameVenda.show();
     }//GEN-LAST:event_bttnInserirActionPerformed
 
@@ -283,7 +286,7 @@ public class VendasPanel extends javax.swing.JPanel {
             if("ABERTA".equals(Venda.verificarSituacao(idVenda)))
             {
                 Venda venda = Venda.listarUma(idVenda);
-                JFrame jFrameVenda = new VendasCadastro(venda, "a");
+                JFrame jFrameVenda = new VendasCadastro(venda, ALTERAR);
                 jFrameVenda.show();
             }
 
@@ -388,7 +391,7 @@ public class VendasPanel extends javax.swing.JPanel {
             
 
             Venda venda = Venda.listarUma(idVenda);
-            JFrame jFrameVenda = new VendasCadastro(venda, "v");
+            JFrame jFrameVenda = new VendasCadastro(venda, VISUALIZAR);
             jFrameVenda.setTitle("Venda - Visualizando");
             jFrameVenda.show();
         }
