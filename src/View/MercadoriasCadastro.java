@@ -217,15 +217,20 @@ public class MercadoriasCadastro extends javax.swing.JFrame {
 
             else if(acaoFrame == INSERIR && Mercadoria.validarSeCodigoExiste(mercadoria.getCodigo()) == true)
             {
-                Helper.MostrarMensagem.mostrarErroMensagem("Registro jÃ¡ cadastrado!");
+                Helper.MostrarMensagem.mostrarErroMensagem("Registro já cadastrado!");
             }
 
-            else
+            else if(acaoFrame == ALTERAR && Mercadoria.permitirAlteracao(mercadoria.getIdMercadoria(), mercadoria.getCodigo()) == false)
             {
                 mercadoria.setIdMercadoria(idMercadoria);
                 MercadoriasPanel.limparTabela();
                 MercadoriasPanel.adicionarNaTabela(Mercadoria.alterarMercadoria(mercadoria));
                 this.dispose();
+            }
+            
+            else
+            {
+                Helper.MostrarMensagem.mostrarErroMensagem("Registro já cadastrado!");
             }
         }
         

@@ -268,7 +268,7 @@ public class MercadoriasDao
                 }
             }
             
-            return faslse;
+            return false;
         }
         
         catch(SQLException ex)
