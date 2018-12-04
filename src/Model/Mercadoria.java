@@ -78,4 +78,9 @@ public class Mercadoria {
     {
         return Controller.MercadoriasDao.validarSeCodigoExiste(codigo);
     }
+    
+    public static boolean permitirAlteracao(int idMercadoria, String codigo)
+    {
+        return Controller.MercadoriasDao.validarAlteracao(idMercadoria, codigo);
+    }
 }
