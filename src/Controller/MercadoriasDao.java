@@ -7,7 +7,6 @@ package Controller;
 
 import Exception.BancoException;
 import Model.Mercadoria;
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +24,7 @@ public class MercadoriasDao
     private static final String EXCLUIR_MERCADORIA = "DELETE FROM mercadoria WHERE id = ?";
     private static final String ALTERAR_MERCADORIA = "UPDATE mercadoria SET codigo = ?, descricao = ?, valor = ?, ativo = ? WHERE id = ?";
     private static final String VALIDAR_ALTERACAO = "SELECT codigo FROM mercadoria WHERE id <> ? AND codigo = ?";
+    
     public static Mercadoria inserir(Mercadoria mercadoria)
     {
         CONN = ConnectionFactory.connect();
