@@ -24,7 +24,7 @@ public class MercadoriasDao
     private static final String SELECT_ULTIMA_INSERIDA = "SELECT * FROM mercadoria ORDER BY id DESC LIMIT 1";
     private static final String EXCLUIR_MERCADORIA = "DELETE FROM mercadoria WHERE id = ?";
     private static final String ALTERAR_MERCADORIA = "UPDATE mercadoria SET codigo = ?, descricao = ?, valor = ?, ativo = ? WHERE id = ?";
-    
+    private static final String VALIDAR_ALTERACAO = "SELECT codigo FROM mercadoria WHERE id <> ? AND codigo = ?";
     public static Mercadoria inserir(Mercadoria mercadoria)
     {
         CONN = ConnectionFactory.connect();
@@ -247,5 +247,33 @@ public class MercadoriasDao
         }
         
         return false;
+    }
+    
+    public static boolean validarAlteracao(int idMercadoria, String codigoMercadoria)
+    {
+        CONN = ConnectionFactory.connect();
+        
+        try
+        {
+            PreparedStatement pstmt = CONN.prepareCall(VALIDAR_ALTERACAO);
+            
+            pstmt.setInt(1, idMercadoria);
+            pstmt.setString(2, codigoMercadoria);
+            
+            try(ResultSet rs = pstmt.executeQuery())
+            {
+                if(rs.next() == true)
+                {
+                    return true;
+                }
+            }
+            
+            return faslse;
+        }
+        
+        catch(SQLException ex)
+        {
+            throw new BancoException(ex.getMessage());
+        }
     }
 }
